@@ -2,6 +2,9 @@
 ./.idea
 .idea
 
+# / Sensitive values
+*.tfvars
+
 # Local .terraform directories
 **/.terraform/*
 
