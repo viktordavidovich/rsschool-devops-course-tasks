@@ -14,7 +14,7 @@ resource "aws_iam_role" "github_actions_role" {
         "Action" : "sts:AssumeRoleWithWebIdentity",
         "Condition" : {
           "StringLike" : {
-            "token.actions.githubusercontent.com:sub" : "repo:viktordavidovich/rsschool-devops-course-tasks :*"
+            "token.actions.githubusercontent.com:sub" : "repo:viktordavidovich/rsschool-devops-course-tasks:*"
           },
           "StringEquals" : {
             "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
