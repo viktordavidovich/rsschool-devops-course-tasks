@@ -64,9 +64,11 @@ jobs:
           terraform_version: "1.9.6"
 
       - name: Terraform Init
+        working-directory: ./task_1  # Specify the directory for the task
         run: terraform init
 
       - name: Terraform Plan
+        working-directory: ./task_1  # Specify the directory for the task
         run: terraform plan
 
   # Job 3: Terraform Apply (Only after merge to main)
@@ -78,6 +80,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: "Configure AWS Credentials"
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          audience: sts.amazonaws.com
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::295056148707:role/GithubActionsRole
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -85,7 +94,9 @@ jobs:
           terraform_version: "1.9.6"
 
       - name: Terraform Init
+        working-directory: ./task_1  # Specify the directory for the task
         run: terraform init
 
       - name: Terraform Apply
+        working-directory: ./task_1  # Specify the directory for the task
         run: terraform apply -auto-approve
