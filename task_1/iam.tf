@@ -4,20 +4,20 @@ resource "aws_iam_role" "github_actions_role" {
 
   # Update the assume role policy to allow GitHub OIDC provider
   assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
+    "Version" : "2012-10-17",
+    "Statement" : [
       {
-        "Effect": "Allow",
-        "Principal": {
-          "Federated": "arn:aws:iam::295056148707:oidc-provider/token.actions.githubusercontent.com"
+        "Effect" : "Allow",
+        "Principal" : {
+          "Federated" : "arn:aws:iam::295056148707:oidc-provider/token.actions.githubusercontent.com"
         },
-        "Action": "sts:AssumeRoleWithWebIdentity",
-        "Condition": {
-          "StringLike": {
-            "token.actions.githubusercontent.com:sub": "repo:YOUR_GITHUB_ORG/YOUR_REPOSITORY_NAME:*"
+        "Action" : "sts:AssumeRoleWithWebIdentity",
+        "Condition" : {
+          "StringLike" : {
+            "token.actions.githubusercontent.com:sub" : "repo:viktordavidovich/rsschool-devops-course-tasks :*"
           },
-          "StringEquals": {
-            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+          "StringEquals" : {
+            "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
           }
         }
       }
