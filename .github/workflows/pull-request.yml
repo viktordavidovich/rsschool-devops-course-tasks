@@ -1,5 +1,9 @@
 name: "Terraform Workflow"
 
+permissions:
+  id-token: write
+  contents: read
+
 on:
   workflow_dispatch:
     inputs:
@@ -41,9 +45,6 @@ jobs:
   # Job 2: Terraform Plan
   terraform-plan:
     name: "Terraform Plan"
-    permissions:
-      id-token: write
-      contents: read
     runs-on: ubuntu-latest
     needs: terraform-check # This job will only run if terraform-check succeeds
     steps:
