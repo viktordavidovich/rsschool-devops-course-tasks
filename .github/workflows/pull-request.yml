@@ -23,8 +23,10 @@ on:
       - reopened      # Trigger when a previously closed pull request is reopened
     branches:
       - main
+  push:
+    branches:
+      - main  # Trigger this workflow on push to the main branch   
       
-
 jobs:
   # Job 1: Terraform Formatting Check
   terraform-check:
@@ -75,7 +77,7 @@ jobs:
   terraform-apply:
     name: "Terraform Apply"
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'  # Run on push to main branch
     needs: terraform-plan # This job will only run if terraform-plan succeeds
     steps:
       - name: Checkout code
