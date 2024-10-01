@@ -1,7 +1,7 @@
 provider "aws" {
-  region                   = var.aws_region
-  profile                  = "default"
-  shared_credentials_files = ["~/.aws/credentials"]
+  region     = var.aws_region
+  access_key = var.aws_access_key_id
+  secret_key = var.aws_secret_access_key
 }
 
 # Configure the Terraform backend to use the created S3 bucket and DynamoDB table
