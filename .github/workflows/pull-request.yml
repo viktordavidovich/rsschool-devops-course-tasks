@@ -2,6 +2,10 @@ name: "Terraform Workflow"
 
 on:
   pull_request:
+    types:
+      - opened        # Trigger when a pull request is opened
+      - synchronize   # Trigger when new commits are pushed to an open pull request
+      - reopened      # Trigger when a previously closed pull request is reopened
     branches:
       - main
 
