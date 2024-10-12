@@ -24,11 +24,6 @@ variable "availability_zones" {
   default     = ["us-east-1a", "us-east-1b"]
 }
 
-variable "ec2_instance_connect_service_name" {
-  description = "EC2 instance connect endpoint"
-  type        = string
-  default     = "com.amazonaws.us-east-1.ec2-instance-connect"
-}
 
 
 

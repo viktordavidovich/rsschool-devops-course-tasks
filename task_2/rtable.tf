@@ -12,20 +12,6 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
-# Route the public subnet traffic through the Internet Gateway
-resource "aws_route" "public-internet-igw-route" {
-  route_table_id         = aws_route_table.public_rt.id
-  gateway_id             = aws_internet_gateway.igw.id
-  destination_cidr_block = "0.0.0.0/0"
-}
-
-# Route NAT Gateway
-resource "aws_route" "nat-ngw-route" {
-  route_table_id         = aws_route_table.private_rt.id
-  nat_gateway_id         = aws_nat_gateway.ngw.id
-  destination_cidr_block = "0.0.0.0/0"
-}
-
 # Associate public route table with public subnets
 resource "aws_route_table_association" "public_association_1" {
   subnet_id      = aws_subnet.public_subnet_1.id
@@ -36,7 +22,6 @@ resource "aws_route_table_association" "public_association_2" {
   subnet_id      = aws_subnet.public_subnet_2.id
   route_table_id = aws_route_table.public_rt.id
 }
-
 
 # Create a private route table for private subnets
 resource "aws_route_table" "private_rt" {
@@ -79,4 +64,11 @@ resource "aws_security_group" "allow_internal" {
   tags = {
     Name = "allow_internal"
   }
+}
+
+# Route NAT Gateway
+resource "aws_route" "nat-ngw-route" {
+  route_table_id         = aws_route_table.private_rt.id
+  nat_gateway_id         = aws_nat_gateway.ngw.id
+  destination_cidr_block = "0.0.0.0/0"
 }

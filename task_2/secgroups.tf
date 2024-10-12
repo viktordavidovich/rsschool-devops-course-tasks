@@ -1,24 +1,3 @@
-# Fetch the prefix list for EC2 Instance Connect (IPv4)
-data "aws_ec2_managed_prefix_list" "ec2_instance_connect_ipv4" {
-  name = var.ec2_instance_connect_service_name
-}
-
-/*
-Debug outputs
-output "ec2_instance_connect_ipv4_prefix_list" {
-
-  description = "The ID of the EC2 Instance Connect IPv4 prefix list"
-  value       = data.aws_ec2_managed_prefix_list.ec2_instance_connect_ipv4.id
-}
-
-output "ec2_instance_connect_ipv4_cidr_blocks" {
-  description = "The CIDR blocks associated with the EC2 Instance Connect IPv4 prefix list"
-  value       = [tolist(data.aws_ec2_managed_prefix_list.ec2_instance_connect_ipv4.entries)[0].cidr]
-}
-
-*/
-
-
 # Security group for public instances to allow SSH and HTTP/HTTPS access
 resource "aws_security_group" "public_sg" {
   vpc_id = aws_vpc.main_vpc.id
@@ -37,9 +16,6 @@ resource "aws_security_group" "public_sg" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    # Both CIDR blocks and Prefix list is not working for EC2 Instance Connect
-    #cidr_blocks = [tolist(data.aws_ec2_managed_prefix_list.ec2_instance_connect_ipv4.entries)[0].cidr]
-    #prefix_list_ids = [data.aws_ec2_managed_prefix_list.ec2_instance_connect_ipv4.id]
   }
 
   ingress {
