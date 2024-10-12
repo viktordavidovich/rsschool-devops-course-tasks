@@ -3,16 +3,43 @@ data "aws_ec2_managed_prefix_list" "ec2_instance_connect_ipv4" {
   name = var.ec2_instance_connect_service_name
 }
 
+/*
+Debug outputs
+output "ec2_instance_connect_ipv4_prefix_list" {
+
+  description = "The ID of the EC2 Instance Connect IPv4 prefix list"
+  value       = data.aws_ec2_managed_prefix_list.ec2_instance_connect_ipv4.id
+}
+
+output "ec2_instance_connect_ipv4_cidr_blocks" {
+  description = "The CIDR blocks associated with the EC2 Instance Connect IPv4 prefix list"
+  value       = [tolist(data.aws_ec2_managed_prefix_list.ec2_instance_connect_ipv4.entries)[0].cidr]
+}
+
+*/
+
+
 # Security group for public instances to allow SSH and HTTP/HTTPS access
 resource "aws_security_group" "public_sg" {
   vpc_id = aws_vpc.main_vpc.id
+
+  # Allow ICMP traffic (ping) from the entire VPC
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["10.0.0.0/16"] # Allow from all VPC instances
+  }
 
   # Allow SSH from the EC2 Instance Connect service prefix list
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    prefix_list_ids = [data.aws_ec2_managed_prefix_list.ec2_instance_connect_ipv4.id]
+    cidr_blocks = ["0.0.0.0/0"]
+    # Both CIDR blocks and Prefix list is not working for EC2 Instance Connect
+    #cidr_blocks = [tolist(data.aws_ec2_managed_prefix_list.ec2_instance_connect_ipv4.entries)[0].cidr]
+    #prefix_list_ids = [data.aws_ec2_managed_prefix_list.ec2_instance_connect_ipv4.id]
   }
 
   ingress {
@@ -44,6 +71,22 @@ resource "aws_security_group" "public_sg" {
 # Security group for private instances (no inbound access from outside the VPC)
 resource "aws_security_group" "private_sg" {
   vpc_id = aws_vpc.main_vpc.id
+
+  # Allow ICMP traffic (ping) from the entire VPC
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["10.0.0.0/16"] # Allow from all VPC instances
+  }
+
+  # Allow SSH
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   egress {
     from_port   = 0
