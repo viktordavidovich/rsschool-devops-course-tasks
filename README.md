@@ -90,7 +90,7 @@ The whole architecture exists within a VPC, which provides network isolation.
 
    The NAT Gateway is placed in the public subnet to allow instances in the private subnet to access the internet (e.g., for downloading updates) without exposing them directly to the internet.
 
-~~**ALB (Application Load Balancer):**~~ (excluded from this task)
+~~**ALB (Application Load Balancer):**~~ (not part of this task, excluded)
 
    ~~The Application Load Balancer (ALB) is deployed in the public subnet to distribute incoming traffic across EC2 instances (and potentially Auto Scaling groups) in different AZs for improved availability and fault tolerance.~~
 
@@ -99,7 +99,7 @@ The whole architecture exists within a VPC, which provides network isolation.
 - Public EC2 Instances (Orange) – These instances are placed in public subnets, meaning they can directly connect to and be reached from the internet.
 - Private EC2 Instances – These instances are placed in private subnets and are not directly accessible from the internet. They can be accessed through other services through the NAT gateway for outgoing connections.
 
-~~**Auto Scaling Group:**~~ (excluded from this task)
+~~**Auto Scaling Group:**~~ (not part of this task, excluded)
 
    ~~The Auto Scaling group is configured to automatically launch or terminate EC2 instances based on demand, ensuring the application can scale with load while maintaining availability.~~
 
