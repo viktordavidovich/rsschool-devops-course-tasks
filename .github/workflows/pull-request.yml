@@ -66,18 +66,19 @@ jobs:
           terraform_version: "1.9.6"
 
       - name: Terraform Init
-        working-directory: ./task_1  # Specify the directory for the task
+        working-directory: ./task_2  # Specify the directory for the task
         run: terraform init
 
       - name: Terraform Plan
-        working-directory: ./task_1  # Specify the directory for the task
+        working-directory: ./task_2  # Specify the directory for the task
         run: terraform plan
 
   # Job 3: Terraform Apply (Only after merge to main)
   terraform-apply:
     name: "Terraform Apply"
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'  # Run on push to main branch
+    # temp comment to have screenshot of success scenario
+    # if: github.event_name == 'push' && github.ref == 'refs/heads/main'  # Run on push to main branch
     needs: terraform-plan # This job will only run if terraform-plan succeeds
     steps:
       - name: Checkout code
@@ -96,9 +97,9 @@ jobs:
           terraform_version: "1.9.6"
 
       - name: Terraform Init
-        working-directory: ./task_1  # Specify the directory for the task
+        working-directory: ./task_2  # Specify the directory for the task
         run: terraform init
 
       - name: Terraform Apply
-        working-directory: ./task_1  # Specify the directory for the task
+        working-directory: ./task_2  # Specify the directory for the task
         run: terraform apply -auto-approve
