@@ -77,8 +77,7 @@ jobs:
   terraform-apply:
     name: "Terraform Apply"
     runs-on: ubuntu-latest
-    # temp comment to have screenshot of success scenario
-    # if: github.event_name == 'push' && github.ref == 'refs/heads/main'  # Run on push to main branch
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'  # Run on push to main branch
     needs: terraform-plan # This job will only run if terraform-plan succeeds
     steps:
       - name: Checkout code
