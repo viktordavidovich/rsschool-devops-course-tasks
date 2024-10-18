@@ -117,7 +117,9 @@ The whole architecture exists within a VPC, which provides network isolation.
 
     Private instances access the internet through the NAT Gateway, which is required for private resources to download updates or communicate with external services.
 
+# Task #3
 
+TBA....
 
 
 
