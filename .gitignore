@@ -42,3 +42,6 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# SSH key to access EC2
+/task_2/rsschool-task-2.pem
