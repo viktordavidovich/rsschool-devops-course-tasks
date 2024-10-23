@@ -24,6 +24,12 @@ variable "availability_zones" {
   default     = ["us-east-1a", "us-east-1b"]
 }
 
+variable "private_key" {
+  description = "The private SSH key"
+  type        = string
+  sensitive   = true
+}
+
 
 
 

@@ -119,8 +119,76 @@ The whole architecture exists within a VPC, which provides network isolation.
 
 # Task #3
 
-TBA....
+### K8s Cluster Configuration and Creation ###
 
+In this task, you will configure and deploy a Kubernetes (K8s) cluster on AWS using either kOps or k3s. You will also verify the cluster by running a simple workload.
+
+### Architecture
+
+![schema-k8s.png](/task_3/schema-k8s.png)
+
+- I reused most of the code from **Task #2** for infrastructure setup
+- Deployed the K8s cluster using the k3s.
+
+
+### Verification 
+
+1. Connect to bastion host via SSH:
+```
+ssh -i path/to/your/private_key.pem ubuntu@<public_instance_bastion_k8s_ip_address>
+```
+
+2. Connect to k3s master node from bastion host via SSH:
+```
+ssh -i /home/ubuntu/.ssh/private_key.pem ubuntu@<private_instance_k8s_ip_address>
+```
+
+3. Locate and read file k3s.yaml
+```
+cat /etc/rancher/k3s/k3s.yaml
+```
+
+You should see similar to this:
+
+```
+apiVersion: v1
+clusters:
+  - cluster:
+      certificate-authority-data: <private_cert_data_is_here>
+      server: https://127.0.0.1:6443
+    name: default
+contexts:
+  - context:
+      cluster: default
+      user: default
+    name: default
+current-context: default
+kind: Config
+preferences: {}
+users:
+  - name: default
+    user:
+      client-certificate-data: <private_cert_data_is_here>
+      client-key-data: <private_cert_data_is_here>
+```
+
+4. Create same file in your local and export path to KUBECONFIG
+
+```
+export KUBECONFIG=/path/to/local/directory/k3s.yaml
+```
+
+5. Verify 
+
+```
+kubectl get nodes
+```
+
+and deploy simple workload
+
+```
+kubectl apply -f https://k8s.io/examples/pods/simple-pod.yaml
+```
 
 
   
