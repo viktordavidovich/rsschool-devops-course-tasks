@@ -71,7 +71,7 @@ jobs:
 
       - name: Terraform Plan
         working-directory: ./task_3  # Specify the directory for the task
-        run: terraform plan
+        run: terraform plan -var="private_key=${{ secrets.TF_PRIVATE_KEY }}"
 
   # Job 3: Terraform Apply (Only after merge to main)
   terraform-apply:
@@ -101,4 +101,4 @@ jobs:
 
       - name: Terraform Apply
         working-directory: ./task_3  # Specify the directory for the task
-        run: terraform apply -auto-approve
+        run: terraform apply -var="private_key=${{ secrets.TF_PRIVATE_KEY }}" -auto-approve
