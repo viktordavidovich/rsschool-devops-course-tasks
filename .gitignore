@@ -2,6 +2,9 @@
 ./.idea
 .idea
 
+# MacOS
+.DS_Store
+
 # / Sensitive values
 *.tfvars
 
@@ -45,3 +48,7 @@ terraform.rc
 
 # SSH key to access EC2
 /task_2/rsschool-task-2.pem
+/task_3/rsschool-task-2.pem
+
+# k3s.yaml configuration copied from remote private instance
+k3s.yaml
